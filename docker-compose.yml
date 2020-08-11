@@ -1,0 +1,33 @@
+version: '2'
+services:
+  init:
+    build: ./dockers/init/
+  redis:
+    restart: always
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+  mysql:
+    image: "mysql:5.7"
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "1234"
+      MYSQL_USER: 'wei'
+      MYSQL_PASS: '1234'
+      MYSQL_DATABASE: "dbname"
+  go-admin:
+    restart: always
+    build: ./dockers/run/
+    ports:
+      - "8000:8000"
+    depends_on:
+        - redis
+        - mysql
+        
+  go-admin-ui:
+    restart: always
+    build: ../go-admin-ui/
+    ports:
+      - "9527:9527"
