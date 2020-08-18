@@ -2,7 +2,6 @@ package tools
 
 import (
 	"bytes"
-	"github.com/gin-gonic/gin"
 	"go-admin/global"
 	"go-admin/models"
 	"go-admin/models/tools"
@@ -11,6 +10,8 @@ import (
 	"go-admin/tools/config"
 	"net/http"
 	"text/template"
+
+	"github.com/gin-gonic/gin"
 )
 
 func Preview(c *gin.Context) {
@@ -138,24 +139,24 @@ func GenMenuAndApi(c *gin.Context) {
 	tools2.HasError(err, "", -1)
 	table.TableId = id
 	tab, _ := table.Get()
-	Mmenu := models.Menu{}
-	Mmenu.MenuName = tab.TBName + "管理"
-	Mmenu.Title = tab.TableComment
-	Mmenu.Icon = "pass"
-	Mmenu.Path = "/" + tab.TBName
-	Mmenu.MenuType = "M"
-	Mmenu.Action = "无"
-	Mmenu.ParentId = 0
-	Mmenu.NoCache = false
-	Mmenu.Component = "Layout"
-	Mmenu.Sort = 0
-	Mmenu.Visible = "0"
-	Mmenu.IsFrame = "0"
-	Mmenu.CreateBy = "1"
-	Mmenu.UpdateBy = "1"
-	Mmenu.CreatedAt = timeNow
-	Mmenu.UpdatedAt = timeNow
-	Mmenu.MenuId, err = Mmenu.Create()
+	// Mmenu := models.Menu{}
+	// Mmenu.MenuName = tab.TBName + "管理"
+	// Mmenu.Title = tab.TableComment
+	// Mmenu.Icon = "pass"
+	// Mmenu.Path = "/" + tab.TBName
+	// Mmenu.MenuType = "M"
+	// Mmenu.Action = "无"
+	// Mmenu.ParentId = 0
+	// Mmenu.NoCache = false
+	// Mmenu.Component = "Layout"
+	// Mmenu.Sort = 0
+	// Mmenu.Visible = "0"
+	// Mmenu.IsFrame = "0"
+	// Mmenu.CreateBy = "1"
+	// Mmenu.UpdateBy = "1"
+	// Mmenu.CreatedAt = timeNow
+	// Mmenu.UpdatedAt = timeNow
+	// Mmenu.MenuId, err = Mmenu.Create()
 
 	Cmenu := models.Menu{}
 	Cmenu.MenuName = tab.TBName + "管理"
@@ -165,7 +166,7 @@ func GenMenuAndApi(c *gin.Context) {
 	Cmenu.MenuType = "C"
 	Cmenu.Action = "无"
 	Cmenu.Permission = tab.PackageName + ":" + tab.ModuleName + ":list"
-	Cmenu.ParentId = Mmenu.MenuId
+	Cmenu.ParentId = tab.ParentMenuId //Mmenu.MenuId
 	Cmenu.NoCache = false
 	Cmenu.Component = "/" + tab.ModuleName + "/index"
 	Cmenu.Sort = 0

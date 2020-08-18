@@ -14,6 +14,7 @@ type SysTables struct {
 	PackageName         string       `gorm:"size:255;" json:"packageName"` //包名
 	ModuleName          string       `gorm:"size:255;" json:"moduleName"`  //模块名
 	BusinessName        string       `gorm:"size:255;" json:"businessName"`
+	ParentMenuId        int          `json:"parentMenuId"`
 	FunctionName        string       `gorm:"size:255;" json:"functionName"`   //功能名称
 	FunctionAuthor      string       `gorm:"size:255;" json:"functionAuthor"` //功能作者
 	PkColumn            string       `gorm:"size:255;" json:"pkColumn"`
