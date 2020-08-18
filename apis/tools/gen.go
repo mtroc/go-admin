@@ -159,7 +159,7 @@ func GenMenuAndApi(c *gin.Context) {
 	// Mmenu.MenuId, err = Mmenu.Create()
 
 	Cmenu := models.Menu{}
-	Cmenu.MenuName = tab.TBName + "管理"
+	Cmenu.MenuName = tab.TBName
 	Cmenu.Title = tab.TableComment
 	Cmenu.Icon = "pass"
 	Cmenu.Path = tab.TBName
@@ -187,7 +187,7 @@ func GenMenuAndApi(c *gin.Context) {
 	MList.Action = "无"
 	MList.Permission = tab.PackageName + ":" + tab.ModuleName + ":query"
 	MList.ParentId = Cmenu.MenuId
-	MList.NoCache = false
+	MList.NoCache = true
 	MList.Sort = 0
 	MList.Visible = "0"
 	MList.IsFrame = "0"
