@@ -184,7 +184,7 @@
     import {add{{.ClassName}}, del{{.ClassName}}, get{{.ClassName}}, list{{.ClassName}}, update{{.ClassName}}} from '@/api/{{ .PackageName}}'
 
     export default {
-        name: 'Config',
+        name: '{{.TBName}}',
         data() {
             return {
                 // 遮罩层
