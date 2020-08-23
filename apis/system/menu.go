@@ -1,11 +1,12 @@
 package system
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
 	"go-admin/models"
 	"go-admin/tools"
 	"go-admin/tools/app"
+
+	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 // @Summary Menu列表数据
@@ -172,5 +173,23 @@ func GetMenuIDS(c *gin.Context) {
 	data.UpdateBy = tools.GetUserIdStr(c)
 	result, err := data.GetIDS()
 	tools.HasError(err, "获取失败", 500)
+	app.OK(c, result, "")
+}
+
+// @Summary module列表数据
+// @Description 获取JSON
+// @Tags 模块
+// @Success 200 {string} string "{"code": 200, "data": [...]}"
+// @Success 200 {string} string "{"code": -1, "message": "抱歉未找到相关信息"}"
+// @Router /api/v1/modulelist [get]
+// @Security Bearer
+func GetModuleList(c *gin.Context) {
+	var Menu models.Menu
+	Menu.MenuType = "M"
+	Menu.ParentId = 0
+	Menu.Visible = "0"
+	result, err := Menu.SetMenu()
+	tools.HasError(err, "抱歉未找到相关信息", -1)
+
 	app.OK(c, result, "")
 }

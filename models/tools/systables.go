@@ -3,6 +3,7 @@ package tools
 import (
 	orm "go-admin/global"
 	"go-admin/models"
+	"strings"
 )
 
 type SysTables struct {
@@ -12,6 +13,7 @@ type SysTables struct {
 	ClassName           string       `gorm:"size:255;" json:"className"`                   //类名
 	TplCategory         string       `gorm:"size:255;" json:"tplCategory"`
 	PackageName         string       `gorm:"size:255;" json:"packageName"` //包名
+	ParentMenuId        int          `json:"parentMenuId"`                 //上级目录
 	ModuleName          string       `gorm:"size:255;" json:"moduleName"`  //模块名
 	BusinessName        string       `gorm:"size:255;" json:"businessName"`
 	FunctionName        string       `gorm:"size:255;" json:"functionName"`   //功能名称
@@ -34,6 +36,7 @@ type SysTables struct {
 	DataScope           string       `gorm:"-" json:"dataScope"`
 	Params              Params       `gorm:"-" json:"params"`
 	Columns             []SysColumns `gorm:"-" json:"columns"`
+	ClassNameLower      string       `gorm:"-" json:"classNameLower"`
 
 	models.BaseModel
 }
@@ -87,6 +90,7 @@ func (e *SysTables) Get() (SysTables, error) {
 	if err := table.First(&doc).Error; err != nil {
 		return doc, err
 	}
+	doc.ClassNameLower = strings.ToLower(doc.ClassName)
 	var col SysColumns
 	col.TableId = doc.TableId
 	if doc.Columns, err = col.GetList(); err != nil {

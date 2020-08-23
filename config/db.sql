@@ -379,6 +379,7 @@ INSERT INTO `sys_menu` VALUES ('486', 'Order', '订单管理', 'list', 'order', 
 INSERT INTO `sys_menu` VALUES ('487', 'Finance', '财务管理', 'money', 'finance', '/0/487', 'M', '', '', '0', '0', '', 'Layout', '5', '0', '1', '1', '1', '2020-08-16 21:11:31', '2020-08-16 21:12:47', null);
 INSERT INTO `sys_menu` VALUES ('488', 'Report', '统计分析', 'monitor', 'report', '/0/488', 'M', '', '', '0', '0', '', 'Layout', '7', '0', '1', '1', '1', '2020-08-16 21:13:21', '2020-08-16 21:17:06', null);
 INSERT INTO `sys_menu` VALUES ('489', 'Product', '产品管理', 'network', 'product', '/0/489', 'M', '', '', '0', '0', '', 'Layout', '6', '0', '1', '1', '1', '2020-08-16 21:16:17', '2020-08-16 21:17:00', null);
+INSERT INTO `sys_menu` VALUES ('490', '', '模块列表', 'list', '/api/v1/modulelist', '/0/63/66/490', 'A', 'GET', '', '66', '0', '', '', '0', '1', '1', '1', '1', '2020-08-22 23:30:19', '2020-08-22 23:30:37', null);
 
 INSERT INTO sys_post VALUES (1, '首席执行官', 'CEO', 0, 0, '首席执行官', '1', '2020-03-08 23:11:15', '2020-04-11 15:52:48', NULL, NULL);
 INSERT INTO sys_post VALUES (2, '首席技术执行官', 'CTO', 2, 0, '首席技术执行官', '1', '1', '2020-04-11 15:52:48', '2020-05-03 20:58:01', NULL);
@@ -549,6 +550,7 @@ INSERT INTO `sys_role_menu` VALUES ('1', '486', 'admin', null, null);
 INSERT INTO `sys_role_menu` VALUES ('1', '487', 'admin', null, null);
 INSERT INTO `sys_role_menu` VALUES ('1', '488', 'admin', null, null);
 INSERT INTO `sys_role_menu` VALUES ('1', '489', 'admin', null, null);
+INSERT INTO `sys_role_menu` VALUES ('1', '490', 'admin', null, null);
 
 
 INSERT INTO sys_user VALUES (1, 'zhangwj', '13818888888', 1, NULL, '', '0', '1@qq.com', 1, 1, '1', '1', NULL, 0, '2019-11-10 14:05:55', '2020-05-03 20:45:59', NULL, 'admin', '$2a$10$cKFFTCzGOvaIHHJY2K45Zuwt8TD6oPzYi4s5MzYIBAWCLL6ZhouP2');

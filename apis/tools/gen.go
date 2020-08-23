@@ -9,6 +9,7 @@ import (
 	"go-admin/tools/app"
 	"go-admin/tools/config"
 	"net/http"
+	"strings"
 	"text/template"
 
 	"github.com/gin-gonic/gin"
@@ -90,7 +91,9 @@ func GenCode(c *gin.Context) {
 	t5, err := template.ParseFiles("template/vue.go.template")
 	tools2.HasError(err, "", -1)
 
-	_ = tools2.PathCreate("./apis/" + tab.ModuleName + "/")
+	fileName := strings.ToLower(tab.ClassName)
+
+	_ = tools2.PathCreate("./apis/" + tab.PackageName + "/")
 	_ = tools2.PathCreate("./models/")
 	_ = tools2.PathCreate("./router/")
 	_ = tools2.PathCreate(config.GenConfig.FrontPath + "/api/")
@@ -106,11 +109,11 @@ func GenCode(c *gin.Context) {
 	err = t4.Execute(&b4, tab)
 	var b5 bytes.Buffer
 	err = t5.Execute(&b5, tab)
-	tools2.FileCreate(b1, "./models/"+tab.PackageName+".go")
-	tools2.FileCreate(b2, "./apis/"+tab.ModuleName+"/"+tab.PackageName+".go")
-	tools2.FileCreate(b3, "./router/"+tab.PackageName+".go")
-	tools2.FileCreate(b4, config.GenConfig.FrontPath+"/api/"+tab.PackageName+".js")
-	tools2.FileCreate(b5, config.GenConfig.FrontPath+"/views/"+tab.PackageName+"/index.vue")
+	tools2.FileCreate(b1, "./models/"+fileName+".go")
+	tools2.FileCreate(b2, "./apis/"+tab.PackageName+"/"+fileName+".go")
+	tools2.FileCreate(b3, "./router/"+fileName+".go")
+	tools2.FileCreate(b4, config.GenConfig.FrontPath+"/api/"+fileName+".js")
+	tools2.FileCreate(b5, config.GenConfig.FrontPath+"/views/"+tab.PackageName+"/"+fileName+".vue")
 
 	helper := tools2.ReplaceHelper{
 		Root:    "./router/router.go",
@@ -139,36 +142,38 @@ func GenMenuAndApi(c *gin.Context) {
 	tools2.HasError(err, "", -1)
 	table.TableId = id
 	tab, _ := table.Get()
-	Mmenu := models.Menu{}
-	Mmenu.MenuName = tab.TBName + "管理"
-	Mmenu.Title = tab.TableComment
-	Mmenu.Icon = "pass"
-	Mmenu.Path = "/" + tab.TBName
-	Mmenu.MenuType = "M"
-	Mmenu.Action = "无"
-	Mmenu.ParentId = 0
-	Mmenu.NoCache = false
-	Mmenu.Component = "Layout"
-	Mmenu.Sort = 0
-	Mmenu.Visible = "0"
-	Mmenu.IsFrame = "0"
-	Mmenu.CreateBy = "1"
-	Mmenu.UpdateBy = "1"
-	Mmenu.CreatedAt = timeNow
-	Mmenu.UpdatedAt = timeNow
-	Mmenu.MenuId, err = Mmenu.Create()
+	// Mmenu := models.Menu{}
+	// Mmenu.MenuName = tab.TBName + "管理"
+	// Mmenu.Title = tab.TableComment
+	// Mmenu.Icon = "pass"
+	// Mmenu.Path = "/" + tab.TBName
+	// Mmenu.MenuType = "M"
+	// Mmenu.Action = "无"
+	// Mmenu.ParentId = 0
+	// Mmenu.NoCache = false
+	// Mmenu.Component = "Layout"
+	// Mmenu.Sort = 0
+	// Mmenu.Visible = "0"
+	// Mmenu.IsFrame = "0"
+	// Mmenu.CreateBy = "1"
+	// Mmenu.UpdateBy = "1"
+	// Mmenu.CreatedAt = timeNow
+	// Mmenu.UpdatedAt = timeNow
+	// Mmenu.MenuId, err = Mmenu.Create()
+
+	fileName := strings.ToLower(tab.ClassName)
 
 	Cmenu := models.Menu{}
-	Cmenu.MenuName = tab.TBName + "管理"
+	Cmenu.MenuName = tab.TBName
 	Cmenu.Title = tab.TableComment
 	Cmenu.Icon = "pass"
-	Cmenu.Path = tab.TBName
+	Cmenu.Path = fileName
 	Cmenu.MenuType = "C"
 	Cmenu.Action = "无"
-	Cmenu.Permission = tab.PackageName + ":" + tab.ModuleName + ":list"
-	Cmenu.ParentId = Mmenu.MenuId
+	Cmenu.Permission = tab.PackageName + ":" + fileName + ":list"
+	Cmenu.ParentId = tab.ParentMenuId //Mmenu.MenuId
 	Cmenu.NoCache = false
-	Cmenu.Component = "/" + tab.ModuleName + "/index"
+	Cmenu.Component = "/" + tab.PackageName + "/" + fileName
 	Cmenu.Sort = 0
 	Cmenu.Visible = "0"
 	Cmenu.IsFrame = "0"
@@ -182,10 +187,10 @@ func GenMenuAndApi(c *gin.Context) {
 	MList.MenuName = tab.TBName
 	MList.Title = "分页获取" + tab.TableComment
 	MList.Icon = "pass"
-	MList.Path = tab.TBName
+	MList.Path = fileName
 	MList.MenuType = "F"
 	MList.Action = "无"
-	MList.Permission = tab.PackageName + ":" + tab.ModuleName + ":query"
+	MList.Permission = tab.PackageName + ":" + fileName + ":query"
 	MList.ParentId = Cmenu.MenuId
 	MList.NoCache = true
 	MList.Sort = 0
@@ -201,10 +206,10 @@ func GenMenuAndApi(c *gin.Context) {
 	MCreate.MenuName = tab.TBName
 	MCreate.Title = "创建" + tab.TableComment
 	MCreate.Icon = "pass"
-	MCreate.Path = tab.TBName
+	MCreate.Path = fileName
 	MCreate.MenuType = "F"
 	MCreate.Action = "无"
-	MCreate.Permission = tab.PackageName + ":" + tab.ModuleName + ":add"
+	MCreate.Permission = tab.PackageName + ":" + fileName + ":add"
 	MCreate.ParentId = Cmenu.MenuId
 	MCreate.NoCache = false
 	MCreate.Sort = 0
@@ -220,10 +225,10 @@ func GenMenuAndApi(c *gin.Context) {
 	MUpdate.MenuName = tab.TBName
 	MUpdate.Title = "修改" + tab.TableComment
 	MUpdate.Icon = "pass"
-	MUpdate.Path = tab.TBName
+	MUpdate.Path = fileName
 	MUpdate.MenuType = "F"
 	MUpdate.Action = "无"
-	MUpdate.Permission = tab.PackageName + ":" + tab.ModuleName + ":edit"
+	MUpdate.Permission = tab.PackageName + ":" + fileName + ":edit"
 	MUpdate.ParentId = Cmenu.MenuId
 	MUpdate.NoCache = false
 	MUpdate.Sort = 0
@@ -239,10 +244,10 @@ func GenMenuAndApi(c *gin.Context) {
 	MDelete.MenuName = tab.TBName
 	MDelete.Title = "删除" + tab.TableComment
 	MDelete.Icon = "pass"
-	MDelete.Path = tab.TBName
+	MDelete.Path = fileName
 	MDelete.MenuType = "F"
 	MDelete.Action = "无"
-	MDelete.Permission = tab.PackageName + ":" + tab.ModuleName + ":remove"
+	MDelete.Permission = tab.PackageName + ":" + fileName + ":remove"
 	MDelete.ParentId = Cmenu.MenuId
 	MDelete.NoCache = false
 	MDelete.Sort = 0
@@ -259,7 +264,7 @@ func GenMenuAndApi(c *gin.Context) {
 	Amenu.MenuName = tab.TBName
 	Amenu.Title = tab.TableComment
 	Amenu.Icon = "bug"
-	Amenu.Path = tab.TBName
+	Amenu.Path = fileName
 	Amenu.MenuType = "M"
 	Amenu.Action = "无"
 	Amenu.ParentId = InterfaceId
@@ -277,7 +282,7 @@ func GenMenuAndApi(c *gin.Context) {
 	AList.MenuName = tab.TBName
 	AList.Title = "分页获取" + tab.TableComment
 	AList.Icon = "bug"
-	AList.Path = "/api/v1/" + tab.ModuleName + "List"
+	AList.Path = "/api/v1/" + fileName + "List"
 	AList.MenuType = "A"
 	AList.Action = "GET"
 	AList.ParentId = Amenu.MenuId
@@ -295,7 +300,7 @@ func GenMenuAndApi(c *gin.Context) {
 	AGet.MenuName = tab.TBName
 	AGet.Title = "根据id获取" + tab.TableComment
 	AGet.Icon = "bug"
-	AGet.Path = "/api/v1/" + tab.ModuleName + "/:id"
+	AGet.Path = "/api/v1/" + fileName + "/:id"
 	AGet.MenuType = "A"
 	AGet.Action = "GET"
 	AGet.ParentId = Amenu.MenuId
@@ -313,7 +318,7 @@ func GenMenuAndApi(c *gin.Context) {
 	ACreate.MenuName = tab.TBName
 	ACreate.Title = "创建" + tab.TableComment
 	ACreate.Icon = "bug"
-	ACreate.Path = "/api/v1/" + tab.ModuleName
+	ACreate.Path = "/api/v1/" + fileName
 	ACreate.MenuType = "A"
 	ACreate.Action = "POST"
 	ACreate.ParentId = Amenu.MenuId
@@ -331,7 +336,7 @@ func GenMenuAndApi(c *gin.Context) {
 	AUpdate.MenuName = tab.TBName
 	AUpdate.Title = "修改" + tab.TableComment
 	AUpdate.Icon = "bug"
-	AUpdate.Path = "/api/v1/" + tab.ModuleName
+	AUpdate.Path = "/api/v1/" + fileName
 	AUpdate.MenuType = "A"
 	AUpdate.Action = "PUT"
 	AUpdate.ParentId = Amenu.MenuId
@@ -349,7 +354,7 @@ func GenMenuAndApi(c *gin.Context) {
 	ADelete.MenuName = tab.TBName
 	ADelete.Title = "删除" + tab.TableComment
 	ADelete.Icon = "bug"
-	ADelete.Path = "/api/v1/" + tab.ModuleName + "/:id"
+	ADelete.Path = "/api/v1/" + fileName + "/:id"
 	ADelete.MenuType = "A"
 	ADelete.Action = "DELETE"
 	ADelete.ParentId = Amenu.MenuId

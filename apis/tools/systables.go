@@ -1,12 +1,13 @@
 package tools
 
 import (
-	"github.com/gin-gonic/gin"
 	"go-admin/models/tools"
 	tools2 "go-admin/tools"
 	"go-admin/tools/app"
 	"net/http"
 	"strings"
+
+	"github.com/gin-gonic/gin"
 )
 
 // @Summary 分页列表数据
@@ -112,11 +113,11 @@ func genTableInit(tablesList []string, i int, c *gin.Context) (tools.SysTables, 
 		strStart := string([]byte(tablenamelist[i])[:1])
 		strend := string([]byte(tablenamelist[i])[1:])
 		data.ClassName += strings.ToUpper(strStart) + strend
-		data.PackageName += strings.ToLower(strStart) + strings.ToLower(strend)
-		data.ModuleName += strings.ToLower(strStart) + strings.ToLower(strend)
+		// data.PackageName += strings.ToLower(strStart) + strings.ToLower(strend)
+		// data.ModuleName += strings.ToLower(strStart) + strings.ToLower(strend)
 	}
 	data.TplCategory = "crud"
-	data.Crud = true
+	// data.Crud = true
 
 	dbcolumn, err := dbColumn.GetList()
 	data.CreateBy = tools2.GetUserIdStr(c)
@@ -125,13 +126,13 @@ func genTableInit(tablesList []string, i int, c *gin.Context) (tools.SysTables, 
 		data.TableComment = data.ClassName
 	}
 
-	data.FunctionName = data.TableComment
-	data.BusinessName = data.ModuleName
-	data.IsLogicalDelete = "1"
-	data.LogicalDelete = true
-	data.LogicalDeleteColumn = "is_del"
+	// data.FunctionName = data.TableComment
+	// data.BusinessName = data.ModuleName
+	// data.IsLogicalDelete = "1"
+	// data.LogicalDelete = true
+	// data.LogicalDeleteColumn = "is_del"
 
-	data.FunctionAuthor = "wenjianzhang"
+	// data.FunctionAuthor = "wenjianzhang"
 	for i := 0; i < len(dbcolumn); i++ {
 		var column tools.SysColumns
 		column.ColumnComment = dbcolumn[i].ColumnComment
