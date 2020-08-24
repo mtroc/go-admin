@@ -1,12 +1,8 @@
 package models
 
 import (
-orm "go-admin/global"
-"go-admin/tools"
-{{$ii := 1}}
-{{ range .Columns }}
-    {{- if eq .GoType "time.Time" -}}{{- if eq $ii 1 -}} "time" {{$ii = 2}}{{- end}}{{- end}}
-{{- end }}
+	orm "go-admin/global"
+	"go-admin/tools"
 )
 
 type {{.ClassName}} struct {

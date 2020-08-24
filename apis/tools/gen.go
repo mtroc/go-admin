@@ -277,7 +277,7 @@ func GenMenuAndApi(c *gin.Context) {
 	AList.MenuName = tab.TBName
 	AList.Title = "分页获取" + tab.TableComment
 	AList.Icon = "bug"
-	AList.Path = "/api/v1/" + tab.BusinessName + "List"
+	AList.Path = "/api/v1/" + tab.PackageName + "/" + tab.BusinessName + "List"
 	AList.MenuType = "A"
 	AList.Action = "GET"
 	AList.ParentId = Amenu.MenuId
@@ -295,7 +295,7 @@ func GenMenuAndApi(c *gin.Context) {
 	AGet.MenuName = tab.TBName
 	AGet.Title = "根据id获取" + tab.TableComment
 	AGet.Icon = "bug"
-	AGet.Path = "/api/v1/" + tab.BusinessName + "/:id"
+	AGet.Path = "/api/v1/" + tab.PackageName + "/" + tab.BusinessName + "/:id"
 	AGet.MenuType = "A"
 	AGet.Action = "GET"
 	AGet.ParentId = Amenu.MenuId
@@ -313,7 +313,7 @@ func GenMenuAndApi(c *gin.Context) {
 	ACreate.MenuName = tab.TBName
 	ACreate.Title = "创建" + tab.TableComment
 	ACreate.Icon = "bug"
-	ACreate.Path = "/api/v1/" + tab.BusinessName
+	ACreate.Path = "/api/v1/" + tab.PackageName + "/" + tab.BusinessName
 	ACreate.MenuType = "A"
 	ACreate.Action = "POST"
 	ACreate.ParentId = Amenu.MenuId
@@ -331,7 +331,7 @@ func GenMenuAndApi(c *gin.Context) {
 	AUpdate.MenuName = tab.TBName
 	AUpdate.Title = "修改" + tab.TableComment
 	AUpdate.Icon = "bug"
-	AUpdate.Path = "/api/v1/" + tab.BusinessName
+	AUpdate.Path = "/api/v1/" + tab.PackageName + "/" + tab.BusinessName
 	AUpdate.MenuType = "A"
 	AUpdate.Action = "PUT"
 	AUpdate.ParentId = Amenu.MenuId
@@ -349,7 +349,7 @@ func GenMenuAndApi(c *gin.Context) {
 	ADelete.MenuName = tab.TBName
 	ADelete.Title = "删除" + tab.TableComment
 	ADelete.Icon = "bug"
-	ADelete.Path = "/api/v1/" + tab.BusinessName + "/:id"
+	ADelete.Path = "/api/v1/" + tab.PackageName + "/" + tab.BusinessName + "/:id"
 	ADelete.MenuType = "A"
 	ADelete.Action = "DELETE"
 	ADelete.ParentId = Amenu.MenuId

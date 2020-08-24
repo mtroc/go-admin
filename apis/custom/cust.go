@@ -1,4 +1,4 @@
-package {{.PackageName}}
+package custom
 
 import (
 	"github.com/gin-gonic/gin"
@@ -9,8 +9,8 @@ import (
 	"go-admin/tools/app/msg"
 )
 
-func Get{{.ClassName}}List(c *gin.Context) {
-	var data models.{{.ClassName}}
+func GetCustList(c *gin.Context) {
+	var data models.Cust
 	var err error
 	var pageSize = 10
 	var pageIndex = 1
@@ -22,16 +22,13 @@ func Get{{.ClassName}}List(c *gin.Context) {
 		pageIndex = tools.StrToInt(err, index)
 	}
 	
-	{{ range .Columns -}}
-	    {{$z := .IsQuery}}
-	    {{- if ($z) -}}
-	    {{ if eq (.GoType) "int" -}}
-	    data.{{.GoField}}, _ = tools.StringToInt(c.Request.FormValue("{{.JsonField}}"))
-	    {{ else -}}
-	    data.{{.GoField}} = c.Request.FormValue("{{.JsonField}}")
-	    {{ end }}
-	    {{- end -}}
-	{{end}}
+	data.CustName = c.Request.FormValue("custName")
+	    data.IndustryType = c.Request.FormValue("industryType")
+	    data.CustType = c.Request.FormValue("custType")
+	    data.CustStatus = c.Request.FormValue("custStatus")
+	    data.CustLevel = c.Request.FormValue("custLevel")
+	    data.Origin = c.Request.FormValue("origin")
+	    
 	
 	data.DataScope = tools.GetUserIdStr(c)
 	result, count, err := data.GetPage(pageSize, pageIndex)
@@ -40,17 +37,17 @@ func Get{{.ClassName}}List(c *gin.Context) {
 	app.PageOK(c, result, count, pageIndex, pageSize, "")
 }
 
-func Get{{.ClassName}}(c *gin.Context) {
-	var data models.{{.ClassName}}
-	data.{{.PkGoField}}, _ = tools.StringToInt(c.Param("{{.PkJsonField}}"))
+func GetCust(c *gin.Context) {
+	var data models.Cust
+	data.Id, _ = tools.StringToInt(c.Param("id"))
 	result, err := data.Get()
 	tools.HasError(err, "抱歉未找到相关信息", -1)
 	
 	app.OK(c, result, "")
 }
 
-func Insert{{.ClassName}}(c *gin.Context) {
-	var data models.{{.ClassName}}
+func InsertCust(c *gin.Context) {
+	var data models.Cust
 	err := c.ShouldBindJSON(&data)
 	data.CreateBy = tools.GetUserIdStr(c)
 	tools.HasError(err, "", 500)
@@ -59,22 +56,22 @@ func Insert{{.ClassName}}(c *gin.Context) {
 	app.OK(c, result, "")
 }
 
-func Update{{.ClassName}}(c *gin.Context) {
-	var data models.{{.ClassName}}
+func UpdateCust(c *gin.Context) {
+	var data models.Cust
 	err := c.BindWith(&data, binding.JSON)
 	tools.HasError(err, "数据解析失败", -1)
 	data.UpdateBy = tools.GetUserIdStr(c)
-	result, err := data.Update(data.{{.PkGoField}})
+	result, err := data.Update(data.Id)
 	tools.HasError(err, "", -1)
 	
 	app.OK(c, result, "")
 }
 
-func Delete{{.ClassName}}(c *gin.Context) {
-	var data models.{{.ClassName}}
+func DeleteCust(c *gin.Context) {
+	var data models.Cust
 	data.UpdateBy = tools.GetUserIdStr(c)
 	
-	IDS := tools.IdsStrToIdsIntGroup("{{.PkJsonField}}", c)
+	IDS := tools.IdsStrToIdsIntGroup("id", c)
 	_, err := data.BatchDelete(IDS)
 	tools.HasError(err, msg.DeletedFail, 500)
 	app.OK(c, nil, msg.DeletedSuccess)
