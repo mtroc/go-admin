@@ -1,10 +1,11 @@
 package router
 
 import (
-	"github.com/gin-gonic/gin"
-	_ "github.com/gin-gonic/gin"
 	"go-admin/pkg/jwtauth"
 	jwt "go-admin/pkg/jwtauth"
+
+	"github.com/gin-gonic/gin"
+	_ "github.com/gin-gonic/gin"
 )
 
 // 路由示例

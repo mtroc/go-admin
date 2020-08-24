@@ -47,13 +47,12 @@ func sysBaseRouter(r *gin.RouterGroup) {
 
 	r.GET("/ws", ws.WebsocketManager.WsClient)
 
-
 	r.GET("/info", handler.Ping)
 }
 
 func sysStaticFileRouter(r *gin.RouterGroup) {
 	mime.AddExtensionType(".js", "application/javascript")
-	
+
 	r.Static("/static", "./static")
 	r.Static("/form-generator", "./static/form-generator")
 }
@@ -117,10 +116,9 @@ func registerSysJobRouter(v1 *gin.RouterGroup) {
 		r.DELETE("/:jobId", sysjob.DeleteSysJob)
 	}
 
-	v1.GET("/job/remove/:jobId",sysjob.RemoveJob)
-	v1.GET("/job/start/:jobId",sysjob.StartJob)
+	v1.GET("/job/remove/:jobId", sysjob.RemoveJob)
+	v1.GET("/job/start/:jobId", sysjob.StartJob)
 }
-
 
 func sysCheckRoleRouterInit(r *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddleware) {
 	r.POST("/login", authMiddleware.LoginHandler)
@@ -171,6 +169,7 @@ func registerPageRouter(v1 *gin.RouterGroup, authMiddleware *jwt.GinJWTMiddlewar
 		v1auth.GET("/postlist", system.GetPostList)
 		v1auth.GET("/menulist", system.GetMenuList)
 		v1auth.GET("/loginloglist", log2.GetLoginLogList)
+		v1auth.GET("/modulelist", system.GetModuleList)
 	}
 }
 
@@ -285,7 +284,7 @@ func registerSysSettingRouter(v1 *gin.RouterGroup) {
 	{
 		setting.GET("", system.GetSetting)
 		setting.POST("", system.CreateSetting)
-		setting.GET("/serverInfo",monitor.ServerInfo)
+		setting.GET("/serverInfo", monitor.ServerInfo)
 	}
 }
 

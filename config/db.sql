@@ -373,12 +373,12 @@ INSERT INTO `sys_menu` VALUES ('480', 'sys_setting', '根据id获取SysSetting',
 INSERT INTO `sys_menu` VALUES ('481', 'sys_setting', '创建SysSetting', 'bug', '/api/v1/syssetting', '/0/63/478/481', 'A', 'POST', '', '478', '0', '', '', '0', '1', '1', '1', '0', '2020-08-09 01:05:22', '2020-08-09 01:05:22', null);
 INSERT INTO `sys_menu` VALUES ('482', 'sys_setting', '修改SysSetting', 'bug', '/api/v1/syssetting', '/0/63/478/482', 'A', 'PUT', '', '478', '0', '', '', '0', '1', '1', '1', '0', '2020-08-09 01:05:22', '2020-08-09 01:05:22', null);
 INSERT INTO `sys_menu` VALUES ('483', 'sys_setting', '删除SysSetting', 'bug', '/api/v1/syssetting/:id', '/0/63/478/483', 'A', 'DELETE', '', '478', '0', '', '', '0', '1', '1', '1', '0', '2020-08-09 01:05:22', '2020-08-09 01:05:22', null);
-INSERT INTO `sys_menu` VALUES ('484', 'Cust', '客户管理', 'peoples', 'cust', '/0/484', 'M', '', '', '0', '0', '', 'Layout', '2', '0', '1', '1', '1', '2020-08-16 21:01:17', '2020-08-16 22:34:07', null);
-INSERT INTO `sys_menu` VALUES ('485', 'Leads', '商机管理', 'guide', 'lead', '/0/485', 'M', '', '', '0', '0', '', 'Layout', '3', '0', '1', '1', '1', '2020-08-16 21:03:02', '2020-08-16 21:12:38', null);
-INSERT INTO `sys_menu` VALUES ('486', 'Order', '订单管理', 'list', 'order', '/0/486', 'M', '', '', '0', '0', '', 'Layout', '4', '0', '1', '1', '1', '2020-08-16 21:10:49', '2020-08-16 21:12:43', null);
-INSERT INTO `sys_menu` VALUES ('487', 'Finance', '财务管理', 'money', 'finance', '/0/487', 'M', '', '', '0', '0', '', 'Layout', '5', '0', '1', '1', '1', '2020-08-16 21:11:31', '2020-08-16 21:12:47', null);
-INSERT INTO `sys_menu` VALUES ('488', 'Report', '统计分析', 'monitor', 'report', '/0/488', 'M', '', '', '0', '0', '', 'Layout', '7', '0', '1', '1', '1', '2020-08-16 21:13:21', '2020-08-16 21:17:06', null);
-INSERT INTO `sys_menu` VALUES ('489', 'Product', '产品管理', 'network', 'product', '/0/489', 'M', '', '', '0', '0', '', 'Layout', '6', '0', '1', '1', '1', '2020-08-16 21:16:17', '2020-08-16 21:17:00', null);
+INSERT INTO `sys_menu` VALUES ('484', 'Cust', '客户管理', 'peoples', '/cust', '/0/484', 'M', '', '', '0', '0', '', 'Layout', '2', '0', '1', '1', '1', '2020-08-16 21:01:17', '2020-08-16 22:34:07', null);
+INSERT INTO `sys_menu` VALUES ('485', 'Chance', '商机管理', 'guide', '/chance', '/0/485', 'M', '', '', '0', '0', '', 'Layout', '3', '0', '1', '1', '1', '2020-08-16 21:03:02', '2020-08-16 21:12:38', null);
+INSERT INTO `sys_menu` VALUES ('486', 'Order', '订单管理', 'list', '/order', '/0/486', 'M', '', '', '0', '0', '', 'Layout', '4', '0', '1', '1', '1', '2020-08-16 21:10:49', '2020-08-16 21:12:43', null);
+INSERT INTO `sys_menu` VALUES ('487', 'Finance', '财务管理', 'money', '/finance', '/0/487', 'M', '', '', '0', '0', '', 'Layout', '5', '0', '1', '1', '1', '2020-08-16 21:11:31', '2020-08-16 21:12:47', null);
+INSERT INTO `sys_menu` VALUES ('488', 'Report', '统计分析', 'monitor', '/report', '/0/488', 'M', '', '', '0', '0', '', 'Layout', '7', '0', '1', '1', '1', '2020-08-16 21:13:21', '2020-08-16 21:17:06', null);
+INSERT INTO `sys_menu` VALUES ('489', 'Product', '产品管理', 'network', '/product', '/0/489', 'M', '', '', '0', '0', '', 'Layout', '6', '0', '1', '1', '1', '2020-08-16 21:16:17', '2020-08-16 21:17:00', null);
 INSERT INTO `sys_menu` VALUES ('490', '', '模块列表', 'list', '/api/v1/modulelist', '/0/63/66/490', 'A', 'GET', '', '66', '0', '', '', '0', '1', '1', '1', '1', '2020-08-22 23:30:19', '2020-08-22 23:30:37', null);
 
 INSERT INTO sys_post VALUES (1, '首席执行官', 'CEO', 0, 0, '首席执行官', '1', '2020-03-08 23:11:15', '2020-04-11 15:52:48', NULL, NULL);

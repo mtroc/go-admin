@@ -9,7 +9,6 @@ import (
 	"go-admin/tools/app"
 	"go-admin/tools/config"
 	"net/http"
-	"strings"
 	"text/template"
 
 	"github.com/gin-gonic/gin"
@@ -91,12 +90,10 @@ func GenCode(c *gin.Context) {
 	t5, err := template.ParseFiles("template/vue.go.template")
 	tools2.HasError(err, "", -1)
 
-	fileName := strings.ToLower(tab.ClassName)
-
 	_ = tools2.PathCreate("./apis/" + tab.PackageName + "/")
 	_ = tools2.PathCreate("./models/")
 	_ = tools2.PathCreate("./router/")
-	_ = tools2.PathCreate(config.GenConfig.FrontPath + "/api/")
+	_ = tools2.PathCreate(config.GenConfig.FrontPath + "/api/" + tab.PackageName + "/")
 	_ = tools2.PathCreate(config.GenConfig.FrontPath + "/views/" + tab.PackageName)
 
 	var b1 bytes.Buffer
@@ -109,11 +106,11 @@ func GenCode(c *gin.Context) {
 	err = t4.Execute(&b4, tab)
 	var b5 bytes.Buffer
 	err = t5.Execute(&b5, tab)
-	tools2.FileCreate(b1, "./models/"+fileName+".go")
-	tools2.FileCreate(b2, "./apis/"+tab.PackageName+"/"+fileName+".go")
-	tools2.FileCreate(b3, "./router/"+fileName+".go")
-	tools2.FileCreate(b4, config.GenConfig.FrontPath+"/api/"+fileName+".js")
-	tools2.FileCreate(b5, config.GenConfig.FrontPath+"/views/"+tab.PackageName+"/"+fileName+".vue")
+	tools2.FileCreate(b1, "./models/"+tab.BusinessName+".go")
+	tools2.FileCreate(b2, "./apis/"+tab.PackageName+"/"+tab.BusinessName+".go")
+	tools2.FileCreate(b3, "./router/"+tab.BusinessName+".go")
+	tools2.FileCreate(b4, config.GenConfig.FrontPath+"/api/"+tab.PackageName+"/"+tab.BusinessName+".js")
+	tools2.FileCreate(b5, config.GenConfig.FrontPath+"/views/"+tab.PackageName+"/"+tab.BusinessName+".vue")
 
 	helper := tools2.ReplaceHelper{
 		Root:    "./router/router.go",
@@ -161,19 +158,17 @@ func GenMenuAndApi(c *gin.Context) {
 	// Mmenu.UpdatedAt = timeNow
 	// Mmenu.MenuId, err = Mmenu.Create()
 
-	fileName := strings.ToLower(tab.ClassName)
-
 	Cmenu := models.Menu{}
 	Cmenu.MenuName = tab.TBName
 	Cmenu.Title = tab.TableComment
 	Cmenu.Icon = "pass"
-	Cmenu.Path = fileName
+	Cmenu.Path = tab.BusinessName
 	Cmenu.MenuType = "C"
 	Cmenu.Action = "无"
-	Cmenu.Permission = tab.PackageName + ":" + fileName + ":list"
+	Cmenu.Permission = tab.PackageName + ":" + tab.BusinessName + ":list"
 	Cmenu.ParentId = tab.ParentMenuId //Mmenu.MenuId
 	Cmenu.NoCache = false
-	Cmenu.Component = "/" + tab.PackageName + "/" + fileName
+	Cmenu.Component = "/" + tab.PackageName + "/" + tab.BusinessName
 	Cmenu.Sort = 0
 	Cmenu.Visible = "0"
 	Cmenu.IsFrame = "0"
@@ -187,10 +182,10 @@ func GenMenuAndApi(c *gin.Context) {
 	MList.MenuName = tab.TBName
 	MList.Title = "分页获取" + tab.TableComment
 	MList.Icon = "pass"
-	MList.Path = fileName
+	MList.Path = tab.BusinessName
 	MList.MenuType = "F"
 	MList.Action = "无"
-	MList.Permission = tab.PackageName + ":" + fileName + ":query"
+	MList.Permission = tab.PackageName + ":" + tab.BusinessName + ":query"
 	MList.ParentId = Cmenu.MenuId
 	MList.NoCache = true
 	MList.Sort = 0
@@ -206,10 +201,10 @@ func GenMenuAndApi(c *gin.Context) {
 	MCreate.MenuName = tab.TBName
 	MCreate.Title = "创建" + tab.TableComment
 	MCreate.Icon = "pass"
-	MCreate.Path = fileName
+	MCreate.Path = tab.BusinessName
 	MCreate.MenuType = "F"
 	MCreate.Action = "无"
-	MCreate.Permission = tab.PackageName + ":" + fileName + ":add"
+	MCreate.Permission = tab.PackageName + ":" + tab.BusinessName + ":add"
 	MCreate.ParentId = Cmenu.MenuId
 	MCreate.NoCache = false
 	MCreate.Sort = 0
@@ -225,10 +220,10 @@ func GenMenuAndApi(c *gin.Context) {
 	MUpdate.MenuName = tab.TBName
 	MUpdate.Title = "修改" + tab.TableComment
 	MUpdate.Icon = "pass"
-	MUpdate.Path = fileName
+	MUpdate.Path = tab.BusinessName
 	MUpdate.MenuType = "F"
 	MUpdate.Action = "无"
-	MUpdate.Permission = tab.PackageName + ":" + fileName + ":edit"
+	MUpdate.Permission = tab.PackageName + ":" + tab.BusinessName + ":edit"
 	MUpdate.ParentId = Cmenu.MenuId
 	MUpdate.NoCache = false
 	MUpdate.Sort = 0
@@ -244,10 +239,10 @@ func GenMenuAndApi(c *gin.Context) {
 	MDelete.MenuName = tab.TBName
 	MDelete.Title = "删除" + tab.TableComment
 	MDelete.Icon = "pass"
-	MDelete.Path = fileName
+	MDelete.Path = tab.BusinessName
 	MDelete.MenuType = "F"
 	MDelete.Action = "无"
-	MDelete.Permission = tab.PackageName + ":" + fileName + ":remove"
+	MDelete.Permission = tab.PackageName + ":" + tab.BusinessName + ":remove"
 	MDelete.ParentId = Cmenu.MenuId
 	MDelete.NoCache = false
 	MDelete.Sort = 0
@@ -264,7 +259,7 @@ func GenMenuAndApi(c *gin.Context) {
 	Amenu.MenuName = tab.TBName
 	Amenu.Title = tab.TableComment
 	Amenu.Icon = "bug"
-	Amenu.Path = fileName
+	Amenu.Path = tab.BusinessName
 	Amenu.MenuType = "M"
 	Amenu.Action = "无"
 	Amenu.ParentId = InterfaceId
@@ -282,7 +277,7 @@ func GenMenuAndApi(c *gin.Context) {
 	AList.MenuName = tab.TBName
 	AList.Title = "分页获取" + tab.TableComment
 	AList.Icon = "bug"
-	AList.Path = "/api/v1/" + fileName + "List"
+	AList.Path = "/api/v1/" + tab.BusinessName + "List"
 	AList.MenuType = "A"
 	AList.Action = "GET"
 	AList.ParentId = Amenu.MenuId
@@ -300,7 +295,7 @@ func GenMenuAndApi(c *gin.Context) {
 	AGet.MenuName = tab.TBName
 	AGet.Title = "根据id获取" + tab.TableComment
 	AGet.Icon = "bug"
-	AGet.Path = "/api/v1/" + fileName + "/:id"
+	AGet.Path = "/api/v1/" + tab.BusinessName + "/:id"
 	AGet.MenuType = "A"
 	AGet.Action = "GET"
 	AGet.ParentId = Amenu.MenuId
@@ -318,7 +313,7 @@ func GenMenuAndApi(c *gin.Context) {
 	ACreate.MenuName = tab.TBName
 	ACreate.Title = "创建" + tab.TableComment
 	ACreate.Icon = "bug"
-	ACreate.Path = "/api/v1/" + fileName
+	ACreate.Path = "/api/v1/" + tab.BusinessName
 	ACreate.MenuType = "A"
 	ACreate.Action = "POST"
 	ACreate.ParentId = Amenu.MenuId
@@ -336,7 +331,7 @@ func GenMenuAndApi(c *gin.Context) {
 	AUpdate.MenuName = tab.TBName
 	AUpdate.Title = "修改" + tab.TableComment
 	AUpdate.Icon = "bug"
-	AUpdate.Path = "/api/v1/" + fileName
+	AUpdate.Path = "/api/v1/" + tab.BusinessName
 	AUpdate.MenuType = "A"
 	AUpdate.Action = "PUT"
 	AUpdate.ParentId = Amenu.MenuId
@@ -354,7 +349,7 @@ func GenMenuAndApi(c *gin.Context) {
 	ADelete.MenuName = tab.TBName
 	ADelete.Title = "删除" + tab.TableComment
 	ADelete.Icon = "bug"
-	ADelete.Path = "/api/v1/" + fileName + "/:id"
+	ADelete.Path = "/api/v1/" + tab.BusinessName + "/:id"
 	ADelete.MenuType = "A"
 	ADelete.Action = "DELETE"
 	ADelete.ParentId = Amenu.MenuId

@@ -36,7 +36,6 @@ type SysTables struct {
 	DataScope           string       `gorm:"-" json:"dataScope"`
 	Params              Params       `gorm:"-" json:"params"`
 	Columns             []SysColumns `gorm:"-" json:"columns"`
-	ClassNameLower      string       `gorm:"-" json:"classNameLower"`
 
 	models.BaseModel
 }
@@ -90,7 +89,7 @@ func (e *SysTables) Get() (SysTables, error) {
 	if err := table.First(&doc).Error; err != nil {
 		return doc, err
 	}
-	doc.ClassNameLower = strings.ToLower(doc.ClassName)
+
 	var col SysColumns
 	col.TableId = doc.TableId
 	if doc.Columns, err = col.GetList(); err != nil {
@@ -102,6 +101,7 @@ func (e *SysTables) Get() (SysTables, error) {
 
 func (e *SysTables) Create() (SysTables, error) {
 	var doc SysTables
+	e.BusinessName = strings.ToLower(e.ClassName)
 	result := orm.Eloquent.Table("sys_tables").Create(&e)
 	if result.Error != nil {
 		err := result.Error
@@ -122,6 +122,7 @@ func (e *SysTables) Update() (update SysTables, err error) {
 		return
 	}
 
+	e.BusinessName = strings.ToLower(e.ClassName)
 	//参数1:是要修改的数据
 	//参数2:是修改的数据
 	if err = orm.Eloquent.Table("sys_tables").Model(&update).Updates(&e).Error; err != nil {

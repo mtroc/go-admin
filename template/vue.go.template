@@ -181,7 +181,7 @@
 </template>
 
 <script>
-    import {add{{.ClassName}}, del{{.ClassName}}, get{{.ClassName}}, list{{.ClassName}}, update{{.ClassName}}} from '@/api/{{ .ClassNameLower }}'
+    import {add{{.ClassName}}, del{{.ClassName}}, get{{.ClassName}}, list{{.ClassName}}, update{{.ClassName}}} from '@/api/{{ .PackageName }}/{{ .BusinessName }}'
 
     export default {
         name: '{{.TBName}}',
